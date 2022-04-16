@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+int main(){
+
+    int idList[] = {20191706007,123,456};
+    int id;
+    char vote;
+    int n = 0;
+    int y = 0;
+    int totalVote = 0;
+
+        while(totalVote<3){
+
+        int flag = 0;
+        printf("\n Insert your ID please: \n");
+        scanf("%d",&id);
+
+
+
+            for(int i = 0; i < 3; i++){
+                if(idList[i]==id){
+                    flag=1;
+                }
+                else{
+                    continue;
+                }
+            }
+
+            if(flag==1){
+            totalVote++;
+                printf("Vote please (Y/N): \n");
+                scanf(" %c", &vote);
+
+                if(vote=='N' || vote=='n'){
+
+                            n++;
+
+                        }
+
+                else if(vote=='Y' || vote=='y'){
+
+                            y++;
+
+                        }
+            }
+
+            else if(flag==0) {
+                printf("Please make sure your ID is a valid one... \n\n");
+
+                continue;
+            }
+
+            printf("total vote:%d \n",totalVote);
+    }
+
+    if(y>n){
+        printf("Group decision is YES.");
+    }
+
+    else{
+        printf("Group decision is NO.");
+    }
+    return 0;
+}
