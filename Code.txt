@@ -1,4 +1,4 @@
-20201706021-Enis
+
 
 
 
@@ -7,7 +7,7 @@
 #include <stdlib.h>
 int main(){
 
-    int idList[] = {20191706007,123,456};
+    int idList[] = {20191706007,20201706021,456};
     int id;
     char vote;
     int n = 0;
