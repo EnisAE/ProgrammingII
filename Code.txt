@@ -1,34 +1,46 @@
 
 
-
-
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 int main(){
 
-    int idList[] = {20191706007,20201706021,456};
+    int idList[] = {20191706007,20201706021,20191706009};
+    char passList[][10]={"AhmetB","EnisEr","UmutSe"};
+    int votedAlready[]={0,0,0};
+
+    char pass[10];
     int id;
     char vote;
+
     int n = 0;
     int y = 0;
     int totalVote = 0;
+    float element=sizeof(passList)/sizeof(*passList);
 
-        while(totalVote<3){
+
+
+        while( y < element/2 && n < element/2 && n+y < element){
 
         int flag = 0;
-        printf("\n Insert your ID please: \n");
+        printf("Insert your ID please: \n");
         scanf("%d",&id);
+
+        printf("Insert your PASS please: \n");
+        scanf("%s",pass);
 
 
 
             for(int i = 0; i < 3; i++){
-                if(idList[i]==id){
+
+
+                if(id == idList[i] && (strcmp(pass,passList[i])) == 0 && 1 != votedAlready[i]){
                     flag=1;
+                    votedAlready[i] = 1;
                 }
-                else{
-                    continue;
-                }
+
+
             }
 
             if(flag==1){
@@ -50,7 +62,7 @@ int main(){
             }
 
             else if(flag==0) {
-                printf("Please make sure your ID is a valid one... \n\n");
+                printf("Please make sure your ID is a valid one or you did not vote yet... \n\n");
 
                 continue;
             }
@@ -59,11 +71,11 @@ int main(){
     }
 
     if(y>n){
-        printf("Group decision is YES.");
+        printf("The group decision is YES.");
     }
 
     else{
-        printf("Group decision is NO.");
+        printf("The group decision is NO.");
     }
     return 0;
 }
