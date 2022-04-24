@@ -20,7 +20,7 @@ int main()
     fclose (p);
 
 
-    int idList[] = {20191706007,20191706008,20191706009};
+    int idList[] = {20191706007,20201706021,20191706009};
     int votedAlready[]={0,0,0};
 
     char pass[7];
