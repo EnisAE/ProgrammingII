@@ -2,80 +2,200 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-int main(){
+int main()
+{
+     char passList[3][7];
 
-    int idList[] = {20191706007,20201706021,20191706009};
-    char passList[][10]={"AhmetB","EnisEr","UmutSe"};
+    FILE *p;
+
+    p = fopen("C:\\Users\\DELL\\OneDrive\\Masaüstü\\Passwords.txt", "r");
+
+    for(int i = 0;i<3;i++)
+    {
+
+    fscanf(p,"%s",passList[i]);
+
+    }
+    fclose (p);
+
+
+    int idList[] = {20191706007,20191706008,20191706009};
     int votedAlready[]={0,0,0};
 
-    char pass[10];
+    char pass[7];
+    char newPass[10];
     int id;
     char vote;
+    int mode;
+    char decision;
+    char finalDecision;
 
+    int a = 0;
     int n = 0;
     int y = 0;
     int totalVote = 0;
     float element=sizeof(passList)/sizeof(*passList);
 
 
+    while(a < element/2  && y < element/2 && n < element/2 && a+n+y < element){
 
-        while( y < element/2 && n < element/2 && n+y < element){
-
-        int flag = 0;
         printf("Insert your ID please: \n");
         scanf("%d",&id);
 
         printf("Insert your PASS please: \n");
         scanf("%s",pass);
+        int flag = 0;
 
 
 
-            for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 3; i++){
 
+         if(id == idList[i] && (strcmp(pass,passList[i])) == 0){
 
-                if(id == idList[i] && (strcmp(pass,passList[i])) == 0 && 1 != votedAlready[i]){
-                    flag=1;
+                printf("\n1) Join Voting 2) Change Your Password \n");
+                printf("What would you like to do? (Please type 1 or 2) \n");
+                scanf("%d",&mode);
+                flag = 1;
+
+                if(mode == 1 && votedAlready[i] == 0){
+
+                    printf("Vote please (Y/N/A): \n");
+                    scanf(" %c", &vote);
+
                     votedAlready[i] = 1;
+
+                    if(vote=='N' || vote=='n'){
+
+                            printf("You said NO. Would you like to stick on your vote or change it to YES or ABSTAIN?\n");
+                            printf("If you want to change your vote to YES, type 'Y' please.\n");
+                            printf("If you want to change your vote to ABSTAIN, type 'A' please.\n");
+                            printf("Or... if you'd like to stick on your vote type 'N' please. (This will be your last chance!)\n");
+                            scanf(" %c",&finalDecision);
+                            if(finalDecision=='Y' || finalDecision=='y')
+                            {
+                                y++;
+                            }
+
+                             else if(vote=='N' || vote=='n')
+                            {
+                                n++;
+                            }
+                             else if(vote=='A' || vote=='a')
+                            {
+                                a++;
+                            }
+
+
+                        }
+
+                    else if(vote=='Y' || vote=='y'){
+
+                            printf("You said YES. Would you like to stick on your vote or change it to NO or ABSTAIN?\n");
+                            printf("If you want to change your vote to NO, type 'N' please.\n");
+                            printf("If you want to change your vote to ABSTAIN, type 'A' please.\n");
+                            printf("Or... if you'd like to stick on your vote type 'Y' please. (This will be your last chance!)\n");
+                            scanf(" %c",&finalDecision);
+                            if(finalDecision=='Y' || finalDecision=='y')
+                            {
+                                y++;
+                            }
+
+                             else if(finalDecision=='N' || finalDecision=='n')
+                            {
+                                n++;
+                            }
+                             else if(finalDecision=='A' || finalDecision=='a')
+                            {
+                                a++;
+                            }
+
+
+                        }
+
+
+                    else if(vote=='A' || vote=='a'){
+
+                            printf("You said ABSTAIN. Would you like to stick on your vote or change it to NO or YES?\n");
+                            printf("If you want to change your vote to NO, type 'N' please.\n");
+                            printf("If you want to change your vote to YES, type 'Y' please.\n");
+                            printf("Or... if you'd like to stick on your vote type 'A' please. (This will be your last chance!)\n");
+                            scanf(" %c",&finalDecision);
+                            if(finalDecision=='Y' || finalDecision=='y')
+                            {
+                                y++;
+                            }
+
+                             else if(finalDecision=='N' || finalDecision=='n')
+                            {
+                                n++;
+                            }
+                             else if(finalDecision=='A' || finalDecision=='a')
+                            {
+                                a++;
+                            }
+
+                        }
+
+                }
+
+                else if(mode == 1 && votedAlready[i] == 1){
+
+                   printf("You voted already...\n\n");
+
+                }
+
+                else if(mode == 2){
+
+                    printf("Input your new password please: \n");
+                    scanf("%s",newPass);
+
+
+                    strcpy(passList[i],newPass);
+                    printf("The password was changed succesfully...\n\n");
+
+                }
+
+                else{
+
+                        printf("Please type your input as 1 or 2 next time... \n");
                 }
 
 
-            }
 
-            if(flag==1){
-            totalVote++;
-                printf("Vote please (Y/N): \n");
-                scanf(" %c", &vote);
+                }
 
-                if(vote=='N' || vote=='n'){
 
-                            n++;
 
-                        }
 
-                else if(vote=='Y' || vote=='y'){
 
-                            y++;
+        }
 
-                        }
-            }
+        if(flag == 0){
+                printf("Wrong id or password, please try again... \n");
+                }
 
-            else if(flag==0) {
-                printf("Please make sure your ID is a valid one or you did not vote yet... \n\n");
-
-                continue;
-            }
-
-            printf("total vote:%d \n",totalVote);
     }
 
-    if(y>n){
-        printf("The group decision is YES.");
+
+
+    if(a>n && a>y){
+        printf("\nTHE GROUP DECISION IS ABSTAIN.");
+    }
+
+    else if (n>y && n>a){
+        printf("\nTHE GROUP DECISION IS NO.");
+    }
+
+    else if (y>n && y>a){
+        printf("\nTHE GROUP DECISION IS YES.");
     }
 
     else{
-        printf("The group decision is NO.");
+        printf("\nTHE GROUP DECISION IS BALANCED.");
     }
+
+
+
     return 0;
 }
